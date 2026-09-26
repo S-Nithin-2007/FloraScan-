@@ -1,11 +1,9 @@
 # FloraScan AI — Plant Leaf Disease Recognition (TensorFlow & CNN)
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Web%20App-2ea44f?style=for-the-badge&logo=githubpages&logoColor=white)](https://s-nithin-2007.github.io/FloraScan-/)
 [![Repository](https://img.shields.io/badge/GitHub-FloraScan--Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/S-Nithin-2007/FloraScan-)
+[![Deployment](https://img.shields.io/badge/Railway-Deploying%20Cloud%20Web%20App-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](https://railway.com/)
 
 An end-to-end Machine Learning Engineering project and interactive presentation platform developed using **TensorFlow 2.x** and **Convolutional Neural Networks (CNN)** to detect and classify 38 plant leaf diseases from the **PlantVillage** dataset benchmark.
-
-**Live Deployment (Public / View-Only):** [https://s-nithin-2007.github.io/FloraScan-/](https://s-nithin-2007.github.io/FloraScan-/)
 
 ---
 
