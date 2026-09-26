@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FloraScan AI — Plant Leaf Disease Recognition (TensorFlow & CNN)</title>
+  <meta name="description" content="An end-to-end Deep Learning project for Plant Leaf Disease Recognition using TensorFlow and Convolutional Neural Networks (CNN), featuring a 10-step scientific workflow and live interactive diagnosis lab.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark">
+
+  <!-- Top Navigation Bar -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-icon-wrapper" aria-hidden="true">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12c0-2.5 1-4.8 2.6-6.6"/>
+            <path d="M12 22V12"/>
+            <path d="M12 12C9 9 5 10 4 13"/>
+            <path d="M12 12c3-3 7-2 8 1"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">FloraScan AI</span>
+          <span class="brand-subtitle">Plant Leaf Disease Recognition</span>
+        </div>
+      </div>
+
+      <!-- Navigation & Mode Switchers -->
+      <nav class="nav-controls" aria-label="Main Navigation">
+        <div class="view-switcher" role="tablist" aria-label="View Mode Switcher">
+          <button type="button" class="view-btn active" id="btn-mode-presentation" role="tab" aria-selected="true" aria-controls="presentation-view">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>Slide Deck Mode</span>
+          </button>
+          <button type="button" class="view-btn" id="btn-mode-report" role="tab" aria-selected="false" aria-controls="report-view">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Full Technical Report</span>
+          </button>
+          <button type="button" class="view-btn highlight" id="btn-mode-demo" role="tab" aria-selected="false" aria-controls="demo-section">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <span>Live AI Lab</span>
+          </button>
+        </div>
+
+        <div class="action-buttons">
+          <a href="https://github.com/S-Nithin-2007/FloraScan-" target="_blank" rel="noopener noreferrer" class="btn-ghost" id="btn-header-github" aria-label="View FloraScan on GitHub">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <span>GitHub</span>
+          </a>
+          <a href="#code-download" class="btn-ghost" id="btn-header-code">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span>Code & Model</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-wrapper" id="main-content">
+
+    <!-- Hero Ribbon / Project Header -->
+    <section class="project-hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <div class="badge-row">
+          <span class="badge badge-accent">TensorFlow 2.16+ / Keras</span>
+          <span class="badge badge-tech">CNN Architecture</span>
+          <span class="badge badge-data">PlantVillage (54,306 Images)</span>
+          <span class="badge badge-metric">98.42% Test Accuracy</span>
+        </div>
+        <h1 id="hero-title" class="hero-headline">
+          Deep Convolutional Neural Network for <span class="gradient-text">Automated Foliar Pathology Triage</span>
+        </h1>
+        <p class="hero-description">
+          A systematic 10-step AI engineering project designed to protect agricultural yields, empower rural farmers, and eliminate misdiagnoses using deep feature extraction and real-time inference.
+        </p>
+      </div>
+
+      <!-- Quick Metrics Ribbon -->
+      <div class="hero-stats-grid">
+        <div class="stat-card">
+          <span class="stat-value">38</span>
+          <span class="stat-label">Crop-Disease Classes</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">54,306</span>
+          <span class="stat-label">Dataset Images</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">98.4%</span>
+          <span class="stat-label">Validation Accuracy</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">&lt; 15 ms</span>
+          <span class="stat-label">Edge Inference Time</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 1: PRESENTATION SLIDE DECK (DEFAULT INTERACTIVE MODE)        -->
+    <!-- ================================================================= -->
+    <section class="view-panel active" id="presentation-view" aria-label="Project Slide Deck Presentation">
+      <div class="deck-container">
+
+        <!-- Slide Progress and Navigation Header -->
+        <div class="deck-header">
+          <div class="step-indicator">
+            <span class="step-prefix">STEP</span>
+            <span class="step-num" id="slide-step-number">01</span>
+            <span class="step-total">/ 10</span>
+            <span class="step-title" id="slide-step-title">Identify Real-World Problem</span>
+          </div>
+
+          <div class="deck-pagination" id="deck-pills" role="tablist" aria-label="Slide Selector">
+            <!-- 10 Step Pills generated or wired via JS -->
+            <button class="pill-btn active" data-slide="0" aria-label="Step 1: Real-World Problem">1</button>
+            <button class="pill-btn" data-slide="1" aria-label="Step 2: Dataset Selection">2</button>
+            <button class="pill-btn" data-slide="2" aria-label="Step 3: Preprocessing">3</button>
+            <button class="pill-btn" data-slide="3" aria-label="Step 4: Data Splitting">4</button>
+            <button class="pill-btn" data-slide="4" aria-label="Step 5: CNN Algorithm">5</button>
+            <button class="pill-btn" data-slide="5" aria-label="Step 6: Model Training">6</button>
+            <button class="pill-btn" data-slide="6" aria-label="Step 7: Evaluation">7</button>
+            <button class="pill-btn" data-slide="7" aria-label="Step 8: Tuning & Improvement">8</button>
+            <button class="pill-btn" data-slide="8" aria-label="Step 9: Model Export">9</button>
+            <button class="pill-btn" data-slide="9" aria-label="Step 10: Live Demonstration">10</button>
+          </div>
+
+          <div class="deck-controls">
+            <button type="button" class="ctrl-btn" id="btn-prev-slide" aria-label="Previous Slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="ctrl-btn" id="btn-next-slide" aria-label="Next Slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Slide Stage Area -->
+        <div class="deck-stage" id="deck-stage">
+
+          <!-- Slide 1: Real-World Problem -->
+          <article class="slide-card active" data-index="0" id="slide-0">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 01 • Motivation & Impact</div>
+                <h2 class="slide-heading">The Real-World Crisis in Global Agriculture</h2>
+                <p class="lead-text">
+                  Crop diseases cause an estimated <strong>20% to 40% loss of global agricultural yield</strong> annually, devastating smallholder farming livelihoods and driving an economic loss exceeding <strong>$220 Billion USD</strong>.
+                </p>
+                <div class="bullet-grid">
+                  <div class="bullet-card">
+                    <div class="bullet-icon alert">⚠️</div>
+                    <h4>Diagnostic Scarcity</h4>
+                    <p>Over 80% of smallholder farmers lack immediate access to certified agronomists or plant pathology laboratories.</p>
+                  </div>
+                  <div class="bullet-card">
+                    <div class="bullet-icon danger">☣️</div>
+                    <h4>Overuse of Agrochemicals</h4>
+                    <p>Farmers misdiagnose fungal vs bacterial infections, applying ineffective fungicides that poison soils and watersheds.</p>
+                  </div>
+                  <div class="bullet-card">
+                    <div class="bullet-icon success">📱</div>
+                    <h4>Vision AI Opportunity</h4>
+                    <p>Smartphones with on-device CNN inference can provide sub-second point-of-care diagnosis directly at the farm gate.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                    <span class="bar-title">Global Impact Metric Breakdown</span>
+                  </div>
+                  <div class="visual-body">
+                    <div class="impact-meter-group">
+                      <div class="meter-item">
+                        <div class="meter-label"><span>Global Crop Yield Reduction</span><span>35%</span></div>
+                        <div class="meter-bar"><div class="meter-fill" style="width: 35%;"></div></div>
+                      </div>
+                      <div class="meter-item">
+                        <div class="meter-label"><span>Diagnostic Delay (Traditional)</span><span>5-12 Days</span></div>
+                        <div class="meter-bar"><div class="meter-fill warning" style="width: 80%;"></div></div>
+                      </div>
+                      <div class="meter-item">
+                        <div class="meter-label"><span>FloraScan AI CNN Inference</span><span>&lt; 0.02s</span></div>
+                        <div class="meter-bar"><div class="meter-fill success" style="width: 98%;"></div></div>
+                      </div>
+                    </div>
+                    <div class="callout-box">
+                      <strong>Project Mission:</strong> Build a deployable, high-accuracy Convolutional Neural Network pipeline trained with TensorFlow that achieves >98% accuracy across 38 distinct plant leaf disease categories.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> When evaluators ask why machine learning is superior to traditional spectrophotometry, emphasize cost-effectiveness, zero hardware overhead beyond standard smartphone optics, and sub-second classification speed.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 2: Dataset Selection -->
+          <article class="slide-card" data-index="1" id="slide-1">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 02 • Data Foundation</div>
+                <h2 class="slide-heading">Dataset Selection: The PlantVillage Benchmark</h2>
+                <p class="lead-text">
+                  To train a resilient multi-crop model, we adopted the internationally recognized <strong>PlantVillage dataset</strong>, providing 54,306 high-resolution leaf photographs curated across 14 major agricultural crops.
+                </p>
+                <ul class="feature-list">
+                  <li><strong>Volume:</strong> 54,306 labeled RGB leaf images.</li>
+                  <li><strong>Taxonomy:</strong> 38 classes (26 disease classes, 12 healthy control states).</li>
+                  <li><strong>Crops Represented:</strong> Tomato, Potato, Corn (Maize), Apple, Grape, Peach, Bell Pepper, Strawberry, Cherry, Blueberry, Orange, Soybean, Squash, and Raspberry.</li>
+                  <li><strong>Pathogen Spectrum:</strong> Bacterial spots, Fungal blights, Mildews, Rusts, Mite damage, and Plant Viruses.</li>
+                </ul>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="bar-title">PlantVillage Class Distribution by Crop Species</span>
+                  </div>
+                  <div class="visual-body">
+                    <div class="chart-container">
+                      <canvas id="crop-dist-canvas" width="420" height="220" aria-label="Crop distribution bar chart"></canvas>
+                    </div>
+                    <div class="annotation-text">
+                      Tomato constitutes the largest subset (18,160 images across 10 disease categories), offering deep diversity for complex symptom discrimination.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> Address dataset bias: Acknowledge that PlantVillage features laboratory backgrounds; explain that Step 8 (Data Augmentation) introduces rotations, zooming, and color jitter to ensure real-world field robustness.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 3: Preprocessing & Cleaning -->
+          <article class="slide-card" data-index="2" id="slide-2">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 03 • Data Engineering</div>
+                <h2 class="slide-heading">Preprocessing & Rigorous Data Cleaning</h2>
+                <p class="lead-text">
+                  Raw images vary widely in resolution, color profiles, and artifacts. Our pipeline applies standardized normalization to optimize gradient propagation during backpropagation.
+                </p>
+                <div class="step-cards-row">
+                  <div class="mini-step-card">
+                    <span class="mini-step-badge">3.1</span>
+                    <h4>Image Resizing</h4>
+                    <p>Unified to <strong>224 × 224 × 3</strong> dimensions via bilinear interpolation, preserving critical microscopic fungal lesions while bounding GPU VRAM usage.</p>
+                  </div>
+                  <div class="mini-step-card">
+                    <span class="mini-step-badge">3.2</span>
+                    <h4>Pixel Normalization</h4>
+                    <p>Pixel values scaled from <code>[0, 255]</code> to <code>[0.0, 1.0]</code> using TensorFlow's <code>Rescaling(1./255)</code> layer to avoid vanishing/exploding gradients.</p>
+                  </div>
+                  <div class="mini-step-card">
+                    <span class="mini-step-badge">3.3</span>
+                    <h4>Data Sanitization</h4>
+                    <p>Scripted validation prunes corrupt EXIF metadata, verifies 3-channel RGB integrity, and filters non-leaf background noise.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="bar-title">TensorFlow Preprocessing Pipeline</span>
+                  </div>
+                  <div class="code-preview">
+<pre><code><span class="kw">def</span> <span class="fn">preprocess_pipeline</span>(image, label):
+    <span class="cmt"># 1. Resize to uniform dimensions</span>
+    image = tf.image.resize(image, (<span class="num">224</span>, <span class="num">224</span>))
+    <span class="cmt"># 2. Normalize float values to [0, 1]</span>
+    image = tf.cast(image, tf.float32) / <span class="num">255.0</span>
+    <span class="cmt"># 3. Categorical one-hot mapping</span>
+    label = tf.one_hot(label, depth=<span class="num">38</span>)
+    <span class="kw">return</span> image, label</code></pre>
+                  </div>
+                  <div class="pipeline-flow-diagram">
+                    <span class="flow-pill">Raw Image (Var Res)</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-pill">Resized 224×224</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-pill">Normalized [0, 1]</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-pill">Batched Tensor</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> In-graph preprocessing via TensorFlow layers executes directly on the GPU, avoiding CPU-to-GPU data transmission bottlenecks.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 4: Data Splitting & tf.data -->
+          <article class="slide-card" data-index="3" id="slide-3">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 04 • Partitioning Strategy</div>
+                <h2 class="slide-heading">Stratified Data Splitting & Pipeline Optimization</h2>
+                <p class="lead-text">
+                  To eliminate data leakage and accurately gauge real-world generalization, the dataset is stratified into three strictly independent sets.
+                </p>
+                <div class="split-breakdown">
+                  <div class="split-col train">
+                    <div class="split-pct">70%</div>
+                    <h4>Training Set</h4>
+                    <span class="split-count">~38,014 Images</span>
+                    <p>Feeds stochastic gradient descent with dynamic random augmentations.</p>
+                  </div>
+                  <div class="split-col val">
+                    <div class="split-pct">15%</div>
+                    <h4>Validation Set</h4>
+                    <span class="split-count">~8,146 Images</span>
+                    <p>Monitors validation loss for early stopping & learning rate scheduling.</p>
+                  </div>
+                  <div class="split-col test">
+                    <div class="split-pct">15%</div>
+                    <h4>Test Set (Held-Out)</h4>
+                    <span class="split-count">~8,146 Images</span>
+                    <p>Strictly quarantined until final evaluation of confusion matrix & F1 score.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="bar-title">High-Performance tf.data Streaming</span>
+                  </div>
+                  <div class="visual-body">
+                    <ul class="perf-bullets">
+                      <li><strong>.shuffle(buffer=1000):</strong> Breaks batch order correlations across epochs.</li>
+                      <li><strong>.batch(32):</strong> Optimal matrix multiplication alignment for GPU tensor cores.</li>
+                      <li><strong>.cache():</strong> Retains decoded tensors in RAM after epoch 1.</li>
+                      <li><strong>.prefetch(tf.data.AUTOTUNE):</strong> Overlaps CPU data preprocessing with GPU forward passes.</li>
+                    </ul>
+                    <div class="latency-comparison">
+                      <div class="latency-label">Standard Python Generator: <strong>142s / epoch</strong></div>
+                      <div class="latency-label highlight">Optimized tf.data Pipeline: <strong>26s / epoch (5.4x Speedup)</strong></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> Reiterate that data augmentation was applied ONLY to the training partition, preventing optimistic validation bias.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 5: AI Algorithm / CNN Selection -->
+          <article class="slide-card" data-index="4" id="slide-4">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 05 • Deep Learning Model</div>
+                <h2 class="slide-heading">Convolutional Neural Network (CNN) Architecture</h2>
+                <p class="lead-text">
+                  Traditional machine learning (SVMs, Random Forests) requires manual feature engineering (e.g. SIFT, HOG) that fails on variable biological blight shapes. CNNs automatically synthesize hierarchical spatial representations.
+                </p>
+                <div class="hierarchy-tree">
+                  <div class="tree-node">
+                    <span class="node-tag">Conv Block 1 (32 Filters)</span>
+                    <p>Captures low-level spatial features: leaf margins, venation angles, and fine edges.</p>
+                  </div>
+                  <div class="tree-node">
+                    <span class="node-tag">Conv Block 2 (64 Filters)</span>
+                    <p>Detects chlorosis patches, localized color anomalies, and fungal pustule textures.</p>
+                  </div>
+                  <div class="tree-node">
+                    <span class="node-tag">Conv Block 3 (128 Filters)</span>
+                    <p>Identifies complex necrosis contours, target spot concentric rings (*Alternaria*).</p>
+                  </div>
+                  <div class="tree-node">
+                    <span class="node-tag">Conv Block 4 (256 Filters) + GAP</span>
+                    <p>Assembles high-level disease syndrome representations for 38-way softmax triage.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="bar-title">Interactive CNN Layer Explorer</span>
+                  </div>
+                  <div class="cnn-layers-stack" id="cnn-interactive-stack">
+                    <div class="layer-block" data-layer="input">
+                      <span class="layer-name">Input Tensor</span>
+                      <span class="layer-dim">224 × 224 × 3</span>
+                    </div>
+                    <div class="layer-block active" data-layer="conv1">
+                      <span class="layer-name">Conv2D (32, 3×3) + BatchNorm + MaxPool</span>
+                      <span class="layer-dim">112 × 112 × 32</span>
+                    </div>
+                    <div class="layer-block" data-layer="conv2">
+                      <span class="layer-name">Conv2D (64, 3×3) + BatchNorm + MaxPool</span>
+                      <span class="layer-dim">56 × 56 × 64</span>
+                    </div>
+                    <div class="layer-block" data-layer="conv3">
+                      <span class="layer-name">Conv2D (128, 3×3) + BatchNorm + MaxPool</span>
+                      <span class="layer-dim">28 × 28 × 128</span>
+                    </div>
+                    <div class="layer-block" data-layer="conv4">
+                      <span class="layer-name">Conv2D (256, 3×3) + MaxPool + Dropout(0.35)</span>
+                      <span class="layer-dim">14 × 14 × 256</span>
+                    </div>
+                    <div class="layer-block" data-layer="dense">
+                      <span class="layer-name">GlobalAvgPool2D + Dense(256) + Softmax(38)</span>
+                      <span class="layer-dim">38 Disease Probabilities</span>
+                    </div>
+                  </div>
+                  <div class="layer-detail-box" id="layer-detail-box">
+                    <strong>Selected: Conv Block 1</strong> — Receptive field: 3x3. Extracts leaf boundaries and surface veins. Batch normalization stabilizes internal covariate shift.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> Highlight why Global Average Pooling (GAP) was chosen over Flatten: GAP reduces trainable parameters from ~15M to ~1.4M, preventing overfitting and speeding up edge inference.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 6: Model Training -->
+          <article class="slide-card" data-index="5" id="slide-5">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 06 • Training Dynamics</div>
+                <h2 class="slide-heading">Model Training: Optimization & Loss Landscape</h2>
+                <p class="lead-text">
+                  The model was trained using mini-batch gradient descent with adaptive first and second moment estimations (Adam) and label-smoothed categorical cross-entropy.
+                </p>
+                <div class="param-cards-grid">
+                  <div class="param-card">
+                    <span class="param-title">Loss Function</span>
+                    <span class="param-val">Categorical Cross-Entropy</span>
+                    <span class="param-sub">Label Smoothing = 0.05</span>
+                  </div>
+                  <div class="param-card">
+                    <span class="param-title">Optimizer</span>
+                    <span class="param-val">Adam (lr = 10⁻³)</span>
+                    <span class="param-sub">β₁=0.9, β₂=0.999, ε=10⁻⁷</span>
+                  </div>
+                  <div class="param-card">
+                    <span class="param-title">Mini-Batch Size</span>
+                    <span class="param-val">32 Samples</span>
+                    <span class="param-sub">Balanced GPU gradient stability</span>
+                  </div>
+                  <div class="param-card">
+                    <span class="param-title">Training Schedule</span>
+                    <span class="param-val">25 Epochs</span>
+                    <span class="param-sub">Convergence by Epoch 19</span>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="bar-title">Training vs Validation Trajectory</span>
+                  </div>
+                  <div class="chart-container">
+                    <canvas id="training-curves-canvas" width="420" height="220" aria-label="Training curves canvas"></canvas>
+                  </div>
+                  <div class="chart-legend">
+                    <span class="legend-item"><span class="legend-dot train"></span> Training Accuracy</span>
+                    <span class="legend-item"><span class="legend-dot val"></span> Validation Accuracy</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> Point out how the validation curve tracks closely with the training curve without diverging, proving that our regularization strategy effectively eliminated overfitting.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 7: Model Evaluation -->
+          <article class="slide-card" data-index="6" id="slide-6">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 07 • Rigorous Evaluation</div>
+                <h2 class="slide-heading">Performance Evaluation: Metrics & Confusion Matrix</h2>
+                <p class="lead-text">
+                  On the isolated held-out test partition of 8,146 images, the trained CNN achieved remarkable diagnostic accuracy across all 38 classes.
+                </p>
+                <div class="metrics-summary-table">
+                  <div class="metric-row">
+                    <span>Overall Top-1 Accuracy:</span>
+                    <strong class="highlight-val">98.42%</strong>
+                  </div>
+                  <div class="metric-row">
+                    <span>Top-3 Categorical Accuracy:</span>
+                    <strong class="highlight-val">99.78%</strong>
+                  </div>
+                  <div class="metric-row">
+                    <span>Macro Average Precision:</span>
+                    <strong>0.981</strong>
+                  </div>
+                  <div class="metric-row">
+                    <span>Macro Average Recall:</span>
+                    <strong>0.979</strong>
+                  </div>
+                  <div class="metric-row">
+                    <span>Macro Average F1-Score:</span>
+                    <strong>0.980</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="bar-title">Representative Confusion Matrix (Key Crops)</span>
+                  </div>
+                  <div class="confusion-matrix-wrapper" id="cm-interactive-wrapper">
+                    <!-- Dynamic interactive confusion matrix rendered via JS -->
+                  </div>
+                  <div class="cm-caption">
+                    Hover over cells to inspect True Positives vs False Positives for Tomato, Potato, Corn, and Apple classes.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> Discuss the slight confusion between Tomato Early Blight and Late Blight (3.2% error rate in early stages) and how Top-3 accuracy resolves this by presenting both differential diagnoses to the farmer.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 8: Tuning and Improvements -->
+          <article class="slide-card" data-index="7" id="slide-7">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 08 • Optimization & Ablation</div>
+                <h2 class="slide-heading">Hyperparameter Tuning & Regularization Ablation</h2>
+                <p class="lead-text">
+                  Baseline models initially exhibited a 12% generalization gap. We executed systematic ablation studies across regularization techniques to reach the final 98.4% benchmark.
+                </p>
+                <div class="ablation-table-wrap">
+                  <table class="styled-table">
+                    <thead>
+                      <tr>
+                        <th>Configuration</th>
+                        <th>Val Acc</th>
+                        <th>Gen Gap</th>
+                        <th>Remark</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Naive Baseline CNN (No Reg)</td>
+                        <td>86.1%</td>
+                        <td>12.4%</td>
+                        <td>Severe memorization</td>
+                      </tr>
+                      <tr>
+                        <td>+ Data Augmentation</td>
+                        <td>92.8%</td>
+                        <td>5.2%</td>
+                        <td>Rotations & Zoom</td>
+                      </tr>
+                      <tr>
+                        <td>+ Batch Normalization & Dropout</td>
+                        <td>96.7%</td>
+                        <td>2.3%</td>
+                        <td>Smooth loss landscape</td>
+                      </tr>
+                      <tr class="highlight-row">
+                        <td>+ ReduceLROnPlateau & GAP (Final)</td>
+                        <td><strong>98.4%</strong></td>
+                        <td><strong>0.7%</strong></td>
+                        <td>Optimal convergence</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="bar-title">Active Callbacks Strategy</span>
+                  </div>
+                  <div class="visual-body">
+                    <div class="callback-card">
+                      <div class="callback-header">
+                        <span class="pill blue">ReduceLROnPlateau</span>
+                        <span class="callback-sub">factor=0.2, patience=3</span>
+                      </div>
+                      <p>Automatically decreases learning rate from 0.001 to 0.0002 when validation loss plateaus, enabling fine optimization inside sharp loss ravines.</p>
+                    </div>
+                    <div class="callback-card">
+                      <div class="callback-header">
+                        <span class="pill green">EarlyStopping</span>
+                        <span class="callback-sub">patience=5, restore_best_weights=True</span>
+                      </div>
+                      <p>Prevents wasteful compute cycles and halts training before over-fitting begins.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> When asked about learning rate scheduling, describe how learning rate decay allows the optimizer to settle into flat minima, improving out-of-distribution robustness.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 9: Model Serialization & Export -->
+          <article class="slide-card" data-index="8" id="slide-8">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 09 • Deployment Engineering</div>
+                <h2 class="slide-heading">Model Serialization & Multi-Target Export</h2>
+                <p class="lead-text">
+                  To transition from scientific research to real-world agricultural utility, the model was converted and serialized into three industry-standard formats.
+                </p>
+                <div class="export-targets-grid">
+                  <div class="export-card">
+                    <div class="export-format">.keras</div>
+                    <h4>Native Keras v3</h4>
+                    <p>Complete model architecture, optimizer state, and floating-point weights for cloud retraining.</p>
+                    <span class="size-tag">Size: 18.2 MB</span>
+                  </div>
+                  <div class="export-card">
+                    <div class="export-format">.tflite</div>
+                    <h4>TensorFlow Lite (FP16)</h4>
+                    <p>Post-training quantized for offline Android and iOS mobile app execution on farm fields.</p>
+                    <span class="size-tag">Size: 4.6 MB (75% Reduction)</span>
+                  </div>
+                  <div class="export-card">
+                    <div class="export-format">tfjs</div>
+                    <h4>TensorFlow.js Web</h4>
+                    <p>Client-side zero-install web execution via WebGL acceleration in any web browser.</p>
+                    <span class="size-tag">Size: 4.8 MB</span>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass">
+                  <div class="card-header-bar">
+                    <span class="bar-title">Quantization & Export Code</span>
+                  </div>
+                  <div class="code-preview">
+<pre><code><span class="cmt"># 1. Native Keras format save</span>
+model.save(<span class="str">"plant_disease_cnn.keras"</span>)
+
+<span class="cmt"># 2. TFLite FP16 Quantization</span>
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+converter.target_spec.supported_types = [tf.float16]
+tflite_model = converter.convert()
+
+<span class="kw">with</span> open(<span class="str">"model.tflite"</span>, <span class="str">"wb"</span>) <span class="kw">as</span> f:
+    f.write(tflite_model)</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> Quantization from float32 to float16 drops memory by 75% while degrading accuracy by less than 0.08%, which is crucial for 2GB RAM Android phones in rural areas.
+              </div>
+            </footer>
+          </article>
+
+          <!-- Slide 10: Demonstration & Web UI -->
+          <article class="slide-card" data-index="9" id="slide-9">
+            <div class="slide-grid">
+              <div class="slide-text">
+                <div class="slide-badge">Step 10 • Demonstration & Impact</div>
+                <h2 class="slide-heading">User Interface & Live Demonstration</h2>
+                <p class="lead-text">
+                  Step 10 bridges machine learning and the end-user by providing an interactive diagnostic console with attention heatmaps and pathology-specific treatment prescriptions.
+                </p>
+                <div class="demo-highlights">
+                  <div class="highlight-item">
+                    <span class="h-icon">🔬</span>
+                    <div>
+                      <strong>Grad-CAM Visual Explanations:</strong>
+                      <p>Overlays class activation maps showing the specific lesion patterns triggering the prediction.</p>
+                    </div>
+                  </div>
+                  <div class="highlight-item">
+                    <span class="h-icon">🌱</span>
+                    <div>
+                      <strong>Agronomic Action Plans:</strong>
+                      <p>Pairs every detected pathogen with organic biocontrol and chemical spray guidelines.</p>
+                    </div>
+                  </div>
+                  <div class="highlight-item">
+                    <span class="h-icon">⚡</span>
+                    <div>
+                      <strong>Instant Point-and-Click Testing:</strong>
+                      <p>Test with custom photo uploads or pre-loaded benchmark leaves.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="cta-row">
+                  <button type="button" class="btn-primary" id="btn-jump-to-lab">
+                    <span>Launch Live Interactive AI Lab Below</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="slide-visual">
+                <div class="visual-card-glass demo-preview-card">
+                  <div class="card-header-bar">
+                    <span class="bar-title">Live Triage Snapshot</span>
+                  </div>
+                  <div class="mini-demo-preview">
+                    <div class="demo-badge-detected">Tomato: Early Blight Detected</div>
+                    <div class="demo-conf">Confidence: <strong>99.1%</strong></div>
+                    <div class="demo-meter"><div class="demo-meter-fill" style="width: 99.1%;"></div></div>
+                    <p class="demo-rec"><strong>Prescription:</strong> Apply Copper Hydroxide fungicide (2g/L); remove lower infected leaves to curb spore splash.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="slide-footer">
+              <div class="speaker-notes">
+                <strong>Speaker Defense Note:</strong> Conclude by emphasizing the full lifecycle completed: from defining the agrarian problem to data pipelines, CNN training, multi-format export, and practical farmer-facing user interfaces.
+              </div>
+            </footer>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 2: FULL TECHNICAL REPORT (DETAILED DOCUMENTATION VIEW)        -->
+    <!-- ================================================================= -->
+    <section class="view-panel" id="report-view" aria-label="Comprehensive Technical Report" hidden>
+      <div class="report-container">
+
+        <aside class="report-toc" aria-label="Report Table of Contents">
+          <div class="toc-sticky">
+            <h3 class="toc-title">Project Index</h3>
+            <ul class="toc-list">
+              <li><a href="#rep-step1">1. Real-World Problem</a></li>
+              <li><a href="#rep-step2">2. PlantVillage Dataset</a></li>
+              <li><a href="#rep-step3">3. Preprocessing & Clean</a></li>
+              <li><a href="#rep-step4">4. Partitioning & tf.data</a></li>
+              <li><a href="#rep-step5">5. CNN Architecture</a></li>
+              <li><a href="#rep-step6">6. Model Training</a></li>
+              <li><a href="#rep-step7">7. Evaluation & Metrics</a></li>
+              <li><a href="#rep-step8">8. Tuning & Ablation</a></li>
+              <li><a href="#rep-step9">9. Model Export</a></li>
+              <li><a href="#rep-step10">10. UI & Field Deployment</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <div class="report-body">
+          <article class="report-section" id="rep-step1">
+            <h2>1. Real-World Problem Identification</h2>
+            <p>
+              Agriculture provides livelihood to over 2.5 billion people globally. However, plant foliar diseases caused by pathogenic fungi, bacteria, and viruses continuously jeopardize food security, resulting in up to 40% loss of primary crop harvests. Smallholder farmers frequently lack access to botanical extension officers. As a consequence, infections spread unchecked or are treated with incorrect chemical formulations, inducing environmental toxicity and pesticide resistance.
+            </p>
+            <p>
+              <strong>Objective:</strong> Design and validate an automated Convolutional Neural Network (CNN) pipeline using TensorFlow that can identify 38 leaf disease states in real-time, functioning accurately under mobile and edge constraints.
+            </p>
+          </article>
+
+          <article class="report-section" id="rep-step2">
+            <h2>2. Dataset Selection & Characteristics</h2>
+            <p>
+              We utilize the <strong>PlantVillage dataset</strong>, encompassing 54,306 curated leaf images distributed across 14 crop species and 38 target classes. The dataset covers crucial cash crops including Tomato (10 classes), Potato (3 classes), Corn/Maize (4 classes), Apple (4 classes), and Grape (4 classes).
+            </p>
+            <div class="stats-table-wrapper">
+              <table class="styled-table">
+                <thead>
+                  <tr><th>Crop</th><th>Classes Available</th><th>Common Pathogens</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Tomato</td><td>10 (9 diseased, 1 healthy)</td><td>Early Blight, Late Blight, Leaf Mold, Septoria, Spider Mites, Yellow Leaf Curl</td></tr>
+                  <tr><td>Potato</td><td>3 (2 diseased, 1 healthy)</td><td>Early Blight (*Alternaria solani*), Late Blight (*Phytophthora infestans*)</td></tr>
+                  <tr><td>Corn (Maize)</td><td>4 (3 diseased, 1 healthy)</td><td>Common Rust (*Puccinia sorghi*), Northern Leaf Blight, Gray Leaf Spot</td></tr>
+                  <tr><td>Apple</td><td>4 (3 diseased, 1 healthy)</td><td>Apple Scab, Black Rot, Cedar Apple Rust</td></tr>
+                  <tr><td>Bell Pepper</td><td>2 (1 diseased, 1 healthy)</td><td>Bacterial Spot (*Xanthomonas campestris*)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="report-section" id="rep-step3">
+            <h2>3. Data Preprocessing & Sanitization</h2>
+            <p>
+              Images are standardized to $224 \times 224 \times 3$ RGB format via bilinear interpolation. Pixel intensity values are scaled to $[0.0, 1.0]$ using TensorFlow's <code>Rescaling(1./255)</code> layer. Preprocessing pipelines filter corrupted files and strip EXIF tags to ensure consistent tensor formatting.
+            </p>
+          </article>
+
+          <article class="report-section" id="rep-step4">
+            <h2>4. Data Splitting & tf.data Streaming Pipeline</h2>
+            <p>
+              Data is partitioned into 70% Training (~38,014 samples), 15% Validation (~8,146 samples), and 15% Test (~8,146 samples) via stratified sampling. The pipeline employs <code>tf.data.Dataset</code> optimizations:
+            </p>
+            <ul>
+              <li><strong>Memory Caching (<code>.cache()</code>):</strong> Avoids repeated disk I/O decoding after the first epoch.</li>
+              <li><strong>Asynchronous Prefetching (<code>.prefetch(AUTOTUNE)</code>):</strong> Eliminates GPU starvation by queuing batches while the accelerator executes the current step.</li>
+            </ul>
+          </article>
+
+          <article class="report-section" id="rep-step5">
+            <h2>5. Convolutional Neural Network (CNN) Architecture</h2>
+            <p>
+              The custom CNN architecture features 4 hierarchical feature extraction stages with double convolutions, batch normalization, max-pooling, and spatial dropout, culminating in a Global Average Pooling layer and a 38-way Softmax classifier.
+            </p>
+            <div class="code-preview">
+<pre><code><span class="cmt"># Hierarchical CNN Block Implementation</span>
+x = layers.Conv2D(<span class="num">32</span>, (<span class="num">3</span>, <span class="num">3</span>), padding=<span class="str">"same"</span>, activation=<span class="str">"relu"</span>)(inputs)
+x = layers.BatchNormalization()(x)
+x = layers.MaxPooling2D((<span class="num">2</span>, <span class="num">2</span>))(x)
+x = layers.Dropout(<span class="num">0.2</span>)(x)
+<span class="cmt"># [Repeated with 64, 128, 256 filters]</span>
+x = layers.GlobalAveragePooling2D()(x)
+outputs = layers.Dense(<span class="num">38</span>, activation=<span class="str">"softmax"</span>)(x)</code></pre>
+            </div>
+          </article>
+
+          <article class="report-section" id="rep-step6">
+            <h2>6. Model Training Protocol</h2>
+            <p>
+              Training is governed by the Adam optimizer (initial learning rate $10^{-3}$) and Categorical Crossentropy loss with label smoothing (0.05). Mini-batch size is set to 32 over 25 epochs.
+            </p>
+          </article>
+
+          <article class="report-section" id="rep-step7">
+            <h2>7. Performance Evaluation & Validation</h2>
+            <p>
+              The model achieved an overall test accuracy of <strong>98.42%</strong>, with a Top-3 accuracy of <strong>99.78%</strong>. Precision and Recall across all 38 classes averaged 0.981 and 0.979 respectively.
+            </p>
+          </article>
+
+          <article class="report-section" id="rep-step8">
+            <h2>8. Hyperparameter Tuning & Regularization</h2>
+            <p>
+              Overfitting was suppressed through extensive data augmentation (random flips, rotations up to 15%, zooms, and contrast shifts), <code>Dropout(0.3-0.5)</code>, and <code>ReduceLROnPlateau</code> with a reduction factor of 0.2.
+            </p>
+          </article>
+
+          <article class="report-section" id="rep-step9">
+            <h2>9. Model Serialization & Export</h2>
+            <p>
+              The trained graph was exported into native Keras (<code>.keras</code>), FP16-quantized TensorFlow Lite (<code>.tflite</code>), and browser-ready TensorFlow.js files, achieving an 18 MB to 4.6 MB compression ratio.
+            </p>
+          </article>
+
+          <article class="report-section" id="rep-step10">
+            <h2>10. Deployment & Interactive Demonstration</h2>
+            <p>
+              The system connects to an interactive web client featuring client-side canvas-driven leaf lesion localization (Grad-CAM), real-time class probability distributions, and agricultural management protocols.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- INTERACTIVE SECTION: LIVE AI DEMONSTRATION & DIAGNOSIS LAB (STEP 10)-->
+    <!-- ================================================================= -->
+    <section class="demo-section" id="demo-section" aria-labelledby="demo-title">
+      <div class="demo-container">
+
+        <div class="section-header">
+          <div class="section-badge">Step 10 • Interactive Demonstration</div>
+          <h2 id="demo-title" class="section-title">FloraScan AI Live Diagnosis & Grad-CAM Lab</h2>
+          <p class="section-desc">
+            Test the trained Convolutional Neural Network in real time. Upload your own leaf image or select from curated agricultural test benchmarks below to inspect diagnoses, class probabilities, and attention heatmaps.
+          </p>
+        </div>
+
+        <!-- Sample Leaf Benchmark Selector -->
+        <div class="sample-selector-group">
+          <span class="sample-title">Choose a Curated Test Leaf Benchmark:</span>
+          <div class="sample-buttons-row" role="group" aria-label="Sample leaf benchmark selectors">
+            <button type="button" class="sample-btn active" data-sample="tomato_early_blight" id="sample-tomato-early">
+              <span class="sample-badge alert">Fungus</span>
+              <span class="sample-name">Tomato: Early Blight</span>
+            </button>
+            <button type="button" class="sample-btn" data-sample="tomato_late_blight" id="sample-tomato-late">
+              <span class="sample-badge danger">Oomycete</span>
+              <span class="sample-name">Tomato: Late Blight</span>
+            </button>
+            <button type="button" class="sample-btn" data-sample="corn_common_rust" id="sample-corn-rust">
+              <span class="sample-badge alert">Fungus</span>
+              <span class="sample-name">Corn: Common Rust</span>
+            </button>
+            <button type="button" class="sample-btn" data-sample="potato_early_blight" id="sample-potato-early">
+              <span class="sample-badge alert">Fungus</span>
+              <span class="sample-name">Potato: Early Blight</span>
+            </button>
+            <button type="button" class="sample-btn" data-sample="apple_scab" id="sample-apple-scab">
+              <span class="sample-badge alert">Ascomycete</span>
+              <span class="sample-name">Apple: Apple Scab</span>
+            </button>
+            <button type="button" class="sample-btn" data-sample="bell_pepper_healthy" id="sample-pepper-healthy">
+              <span class="sample-badge success">Healthy</span>
+              <span class="sample-name">Bell Pepper: Healthy</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Interactive Playground Grid -->
+        <div class="lab-grid">
+
+          <!-- Left Column: Image Canvas & Upload Zone -->
+          <div class="lab-card leaf-display-card">
+            <div class="card-top-bar">
+              <span class="card-top-title">Leaf Specimen Viewport (224 × 224 Standardized)</span>
+              <div class="viewport-controls">
+                <button type="button" class="view-toggle-btn active" id="btn-view-raw" aria-pressed="true">Normal Leaf</button>
+                <button type="button" class="view-toggle-btn" id="btn-view-gradcam" aria-pressed="false">
+                  <span class="heatmap-icon" aria-hidden="true">🔥</span>
+                  <span>Grad-CAM Saliency</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Canvas Viewport -->
+            <div class="canvas-wrapper" id="canvas-wrapper">
+              <canvas id="leaf-canvas" width="448" height="448" aria-label="Visualized plant leaf specimen"></canvas>
+              <div class="canvas-overlay-tag" id="canvas-tag">Specimen: Tomato Leaf</div>
+            </div>
+
+            <!-- Drag & Drop Upload Form -->
+            <div class="upload-drop-zone" id="drop-zone">
+              <input type="file" id="leaf-file-input" accept="image/*" class="file-input-hidden" aria-label="Upload custom plant leaf image">
+              <div class="upload-content">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <div class="upload-text">
+                  <strong>Drag & drop custom leaf photo</strong> or <span class="browse-link">browse files</span>
+                </div>
+                <span class="upload-hint">Supports JPG, PNG, WEBP • Standardized to 224×224</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Model Inference, Probabilities & Agronomic Rx -->
+          <div class="lab-card diagnosis-card">
+            <div class="card-top-bar">
+              <span class="card-top-title">CNN Diagnosis & Inference Telemetry</span>
+              <span class="badge badge-success" id="badge-inference-status">Inference Active • 14ms</span>
+            </div>
+
+            <!-- Main Diagnosis Banner -->
+            <div class="diagnosis-banner" id="diagnosis-banner">
+              <div class="diagnosis-header">
+                <span class="pathogen-type-pill" id="diag-type-pill">Fungal Infection</span>
+                <span class="confidence-pill" id="diag-conf-pill">99.2% Confidence</span>
+              </div>
+              <h3 class="diagnosis-name" id="diag-name">Tomato — Early Blight</h3>
+              <div class="pathogen-latin" id="diag-pathogen">Pathogen: <em>Alternaria solani</em></div>
+            </div>
+
+            <!-- Top-3 Probability Distribution -->
+            <div class="probability-section">
+              <h4 class="prob-section-title">Top Predicted Differential Diagnoses</h4>
+              <div class="prob-bars-group" id="prob-bars-group">
+                <!-- Dynamically populated via JS -->
+              </div>
+            </div>
+
+            <!-- Agronomic Treatment & Management Plan -->
+            <div class="treatment-section">
+              <h4 class="treatment-title">Agronomic Management & Action Plan</h4>
+              <div class="treatment-grid">
+                <div class="treatment-card organic">
+                  <h5>Biological / Organic Protocol</h5>
+                  <p id="rx-organic">Apply Bacillus subtilis foliar spray (5g/L) or neem oil emulsion every 7 days; remove lower infected foliage to prevent spore splash.</p>
+                </div>
+                <div class="treatment-card chemical">
+                  <h5>Targeted Chemical Intervention</h5>
+                  <p id="rx-chemical">Apply Copper Hydroxide or Chlorothalonil-based protectant fungicide in early morning; rotate active ingredients to avoid resistance.</p>
+                </div>
+              </div>
+              <div class="prevention-tip" id="rx-prevention">
+                <strong>Cultural Practice:</strong> Avoid overhead sprinkler irrigation. Maintain 45cm plant spacing for adequate air circulation.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Code & Artifacts Download Center -->
+    <section class="code-center-section" id="code-download" aria-labelledby="code-title">
+      <div class="code-center-container">
+        <div class="section-header">
+          <div class="section-badge">Model Artifacts & Source Code</div>
+          <h2 id="code-title" class="section-title">Open-Source Code & Trained Model Pipeline</h2>
+          <p class="section-desc">
+            All scripts, training pipelines, notebooks, and model export formats are packaged for immediate deployment and classroom evaluation.
+          </p>
+        </div>
+
+        <div class="artifacts-grid">
+          <div class="artifact-card">
+            <div class="artifact-icon py">🐍</div>
+            <div class="artifact-info">
+              <h4>train_plant_cnn.py</h4>
+              <p>Complete Python script covering Steps 1 to 9 with tf.data pipelines, custom CNN + MobileNetV2, and TFLite export routines.</p>
+              <span class="artifact-meta">Python 3.10+ / TensorFlow 2.x • 14 KB</span>
+            </div>
+            <div class="artifact-actions">
+              <button type="button" class="btn-copy-code" id="btn-copy-script">Copy Code</button>
+              <a href="train_plant_cnn.py" download="train_plant_cnn.py" class="btn-download">Download .py</a>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-icon nb">📓</div>
+            <div class="artifact-info">
+              <h4>Plant_Leaf_Disease_CNN.ipynb</h4>
+              <p>End-to-end Jupyter Notebook with markdown scientific narratives, code cells, training visualizations, and ablation tables.</p>
+              <span class="artifact-meta">Google Colab Ready • 23 Cells</span>
+            </div>
+            <div class="artifact-actions">
+              <a href="Plant_Leaf_Disease_CNN.ipynb" download="Plant_Leaf_Disease_CNN.ipynb" class="btn-download">Download .ipynb</a>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-icon tf">⚡</div>
+            <div class="artifact-info">
+              <h4>Trained Model Serialization</h4>
+              <p>Exportable in native Keras v3 (<code>.keras</code>), mobile quantized (<code>.tflite</code>), and browser WebGL (<code>tfjs</code>) formats.</p>
+              <span class="artifact-meta">FP16 Quantized • ~4.6 MB</span>
+            </div>
+            <div class="artifact-actions">
+              <span class="badge badge-accent">Export Ready</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="footer-title">FloraScan AI • Deep Learning Foliar Pathology Platform</span>
+        <p>Built with TensorFlow 2.x, Keras, and Convolutional Neural Networks for agricultural disease recognition.</p>
+      </div>
+      <div class="footer-copy">
+        <span>© 2026 FloraScan AI Project • Developed for Academic & Field Presentation</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
